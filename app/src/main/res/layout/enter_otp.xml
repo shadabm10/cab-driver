@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:background="@color/yellow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_margin="20dp"
+            android:src="@drawable/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:tint="@color/colorPrimary"/>
+
+
+        <TextView
+            android:textSize="20sp"
+
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimary"
+            android:text="Verification"
+            android:layout_toRightOf="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbar"
+        android:gravity="center"
+        android:layout_above="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/icon"
+        android:src="@mipmap/logo_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt"
+            android:textColor="@color/btnblack"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/icon"
+            android:text="Ask rider for OTP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.mukesh.OtpView
+            android:layout_below="@+id/txt"
+            android:id="@+id/otp_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number">
+            <!--app:text_background_color="@color/colorPrimaryDark"-->
+        </com.mukesh.OtpView>
+
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/confirm"
+        android:textColor="@color/colorPrimary"
+        android:text="START TRIP"
+        android:background="@color/yellow"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

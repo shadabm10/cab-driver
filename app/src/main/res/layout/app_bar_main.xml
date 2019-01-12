@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ugo.ugodriver.MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/rl_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/yellow"
+            app:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <ImageView
+                android:id="@+id/img_arrow"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/colorPrimary"
+                android:src="@mipmap/ic_arrow_back_black_24dp"/>
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_toolbar"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+           <Switch
+               android:id="@+id/switch_on_off"
+               android:textSize="16sp"
+
+               android:textColor="@color/colorPrimary"
+               android:layout_margin="10dp"
+               android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_main"
+        />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/splash_driver"
+    >
+
+
+   <!-- <ImageView
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/logo"
+        />-->
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:text="Drive and make \n extra cash anytime."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <!--<pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gain_splash"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp" />-->
+
+
+
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_signin"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:padding="15dp"
+            android:text="SIGN IN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+<!--
+        <TextView
+            android:id="@+id/txt_register"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@color/yellow"
+            android:padding="15dp"
+            android:text="REGISTER"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+-->
+
+
+    </LinearLayout>
+
+</RelativeLayout>

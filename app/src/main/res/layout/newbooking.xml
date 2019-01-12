@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:minWidth="300dp">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        >
+
+
+        <TextView
+            android:id="@+id/tv1"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pickup Request"/>
+
+
+        <TextView
+            android:id="@+id/tv_ride_type"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv1"
+            android:padding="5dp"
+            android:text="City Taxi"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:padding="20dp"
+        android:id="@+id/rl_name_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginRight="20dp"
+        android:id="@+id/rider_image"
+        android:src="@drawable/driver_icon"
+        android:layout_width="40dp"
+        android:layout_centerVertical="true"
+        android:layout_height="40dp" />
+
+
+
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/rider_name"
+        android:textStyle="bold"
+        android:textColor="@color/btnblack"
+        android:layout_toRightOf="@+id/rider_image"
+        android:textSize="15sp"
+        android:text="Rider Name "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+
+    <View
+        android:layout_marginTop="5dp"
+        android:background="#bbbbbb"
+        android:layout_width="match_parent"
+        android:layout_height=".5dp">
+
+    </View>
+
+    <TextView
+        android:gravity="center"
+        android:drawableLeft="@drawable/location_green"
+        android:id="@+id/pick_add"
+        android:layout_margin="10dp"
+        android:textColor="@color/btnblack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="Pickup Address will be shown here"/>
+
+
+
+    <com.google.android.gms.maps.MapView
+        android:layout_marginTop="5dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        map:liteMode="true"
+        map:mapType="normal"
+        >
+
+    </com.google.android.gms.maps.MapView>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/reject"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:text="REJECT"
+            android:textColor="#ffffff"
+            android:background="#F45B5C"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/accept"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:text="ACCEPT"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

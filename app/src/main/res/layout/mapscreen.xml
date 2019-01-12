@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/booking_main_container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_above="@+id/rl_bottom"
+        android:orientation="vertical"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        >
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/btnblack"
+        android:gravity="center"
+        android:background="#ffffff"
+        />
+
+
+
+    <android.support.v7.widget.CardView android:background="#ffffff"
+        android:layout_margin="20dp"
+        android:id="@+id/card_header_main"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="1dp"
+        android:visibility="gone"
+        card_view:cardCornerRadius="3dp"
+        >
+
+        <RelativeLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_margin="5dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/img_top"
+                android:src="@drawable/navigation_black"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+            <TextView
+                android:textSize="12sp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/txt_top_heading"
+                android:text="Pick Up Location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:id="@+id/tv_show_pickup_add"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/img_top"
+                android:textSize="14sp"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/txt_top_heading"
+                android:gravity="center"
+                android:maxLines="2"
+                android:textColor="@color/btnblack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/dummy_booking"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="5dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="Get Dummy\nBooking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_navigation2"
+        android:visibility="visible"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_bottom"
+        android:layout_alignParentRight="true"
+        android:padding="20dp"
+        >
+        <ImageView
+            android:id="@+id/navigation2"
+            android:src="@drawable/navigation_blue"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="#EEEEEE"
+        android:id="@+id/rl_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_my_loc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/txt_my_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Location" />
+
+
+            <android.support.v7.widget.CardView android:background="#ffffff"
+                android:layout_below="@+id/txt_my_loc"
+                android:layout_marginTop="5dp"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardElevation="0dp"
+                card_view:cardCornerRadius="5dp">
+
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/txt_current_loc"
+                        android:gravity="center"
+                        android:maxLines="3"
+                        android:text="Fetching current location .."
+                        android:textColor="@color/btnblack"
+                        android:drawableLeft="@drawable/location_green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:background="#eeeeee"
+            android:id="@+id/rl_accepted_job"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/vw"
+                android:background="#BBBBBB"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+
+            <android.support.v7.widget.CardView
+                android:background="#ffffff"
+                android:id="@+id/card_name_img"
+                android:layout_margin="10dp"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardElevation="1dp"
+                card_view:cardCornerRadius="3dp">
+
+
+            <RelativeLayout
+                android:padding="10dp"
+                android:id="@+id/rl_name_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/rider_image"
+                    android:src="@drawable/ic_user"
+                    android:layout_width="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="40dp" />
+
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/rider_name"
+                    android:textStyle="bold"
+                    android:textColor="@color/btnblack"
+                    android:layout_toRightOf="@+id/rider_image"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <LinearLayout
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_distance"
+                        android:textColor="@color/btnblack"
+                        android:visibility="visible"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textColor="@color/btnblack"
+                        android:visibility="visible"
+                        android:text="Distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+
+
+            </RelativeLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:id="@+id/ll_call_nav"
+                android:layout_below="@+id/card_name_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:id="@+id/ll_call"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+
+                        android:id="@+id/img_call"
+                        android:src="@drawable/call"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:textSize="18sp"
+                        android:textColor="@color/btnblack"
+                        android:layout_marginLeft="10dp"
+                        android:text="Call Rider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_navigation"
+                        android:visibility="visible"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+
+                            android:id="@+id/navigation"
+                            android:src="@drawable/navigation_blue"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
+
+                        <TextView
+                            android:textSize="18sp"
+                            android:textColor="@color/btnblack"
+                            android:layout_marginLeft="10dp"
+                            android:text="Navigation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_timer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/timer"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:id="@+id/tv_waiting_time"
+                        android:textColor="@color/btnblack"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="visible"
+                        android:text="00:00:00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_buttons"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/ll_call_nav"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <Button
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:id="@+id/btn_cancel_trip"
+                    android:textSize="18sp"
+                    android:textColor="#ffffff"
+                    android:text="Cancel Trip"
+                    android:background="@color/btnblack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:visibility="visible"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_reached"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:text="Reached"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <Button
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:id="@+id/btn_client_located"
+                    android:textColor="#ffffff"
+                    android:text="Client Located"
+                    android:textSize="18sp"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <Button
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:id="@+id/btn_drop_off"
+                android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/card_name_img"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:text="Drop Off"
+                android:background="@color/btnblack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

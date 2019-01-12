@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:background="@color/yellow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:tint="#ffffff"
+            android:id="@+id/back"
+            android:layout_margin="20dp"
+            android:src="@drawable/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+
+        <TextView
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:textColor="#ffffff"
+            android:layout_toRightOf="@+id/back"
+            android:text="Fare Details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:padding="5dp"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text="Distance:"
+                            android:gravity="center"
+                            android:id="@+id/tv_dis"
+                            android:drawablePadding="10dp"
+                            android:drawableLeft="@mipmap/icon_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+
+                        <TextView
+                            android:id="@+id/distance"
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text=" KM"
+                            android:layout_toRightOf="@+id/tv_dis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/tv_ride_fare"
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text="0.00"
+                            android:textSize="16dp"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@+id/distance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:padding="5dp"
+                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_tt"
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text="Travel Time:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/icon_sch"
+                            android:drawableTint="@color/colorPrimary"
+                            android:drawablePadding="10dp"/>
+
+                        <TextView
+                            android:id="@+id/time"
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text=" Mins"
+                            android:layout_toRightOf="@+id/tv_tt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/tv_tax_amt"
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:textSize="16dp"
+                            android:text="0.00"
+                            android:layout_marginLeft="30dp"
+                            android:layout_toRightOf="@+id/time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+<!--
+                    <RelativeLayout
+                        android:id="@+id/rl_fare"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:padding="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text="Ride Fare:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+-->
+
+                    <RelativeLayout
+                        android:id="@+id/rl_coupon"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:padding="5dp"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text="Coupon Amount:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_coupon_amt"
+                            android:textStyle="bold"
+                            android:layout_alignParentRight="true"
+                            android:textColor="#ffffff"
+                            android:text="0.00"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+
+<!--
+                    <RelativeLayout
+                        android:id="@+id/rl_tax"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:padding="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text="Tax:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+-->
+
+                    <RelativeLayout
+                        android:id="@+id/rl_guider"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:padding="5dp"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="#ffffff"
+                            android:text="Guide Fees:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_gide_fee"
+                            android:textStyle="bold"
+                            android:layout_alignParentRight="true"
+                            android:textColor="#ffffff"
+                            android:text="0.00"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="70dp"
+                        android:layout_marginLeft="70dp"
+                       android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_horizontal"
+                        android:background="@drawable/button_curved"
+                        >
+
+                        <TextView
+                            android:textColor="@color/colorPrimaryDark"
+                            android:text="TOTAL FARE"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textSize="16sp"
+                            android:layout_below="@+id/fare"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/fare"
+                            android:textStyle="bold"
+                            android:textSize="30sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:text="0.00"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <fragment
+                    android:id="@+id/map3"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.CardView
+                        android:background="#ffffff"
+                        android:id="@+id/card_name_img"
+                        android:layout_margin="10dp"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardElevation="1dp"
+                        card_view:cardCornerRadius="3dp">
+
+
+                        <RelativeLayout
+                            android:padding="10dp"
+                            android:id="@+id/rl_name_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true">
+
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_marginRight="20dp"
+                                android:id="@+id/rider_image"
+                                android:src="@drawable/ic_user"
+                                android:layout_width="40dp"
+                                android:layout_centerVertical="true"
+                                android:layout_height="40dp" />
+
+
+                            <TextView
+                                android:layout_centerVertical="true"
+                                android:id="@+id/rider_name"
+                                android:textStyle="bold"
+                                android:textColor="@color/btnblack"
+                                android:layout_toRightOf="@+id/rider_image"
+                                android:textSize="15sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+
+                            <LinearLayout
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/dist"
+                                    android:textColor="@color/btnblack"
+                                    android:visibility="visible"
+                                    android:text=" KM"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                                <TextView
+                                    android:textColor="@color/btnblack"
+                                    android:visibility="visible"
+                                    android:text="Distance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+
+
+
+                        </RelativeLayout>
+
+
+                    </android.support.v7.widget.CardView>
+
+
+                    <android.support.v7.widget.CardView
+                        android:background="#ffffff"
+                        android:layout_below="@+id/card_name_img"
+                        android:layout_margin="10dp"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardElevation="1dp"
+                        card_view:cardCornerRadius="3dp"
+                        android:id="@+id/card_view2"
+                        >
+
+
+                        <RelativeLayout
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <RatingBar
+                                android:layout_centerHorizontal="true"
+                                android:id="@+id/ratingbar"
+                                android:numStars="5"
+                                android:stepSize="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <EditText
+                                android:id="@+id/edt_comment"
+                                android:layout_marginTop="10dp"
+                                android:hint="Write your comment"
+                                android:layout_below="@+id/ratingbar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+
+                    </android.support.v7.widget.CardView>
+                    <RelativeLayout
+                        android:id="@+id/rl_bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_below="@+id/card_view2"
+                        android:layout_alignParentBottom="true"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            >
+
+                            <RelativeLayout
+                                android:id="@+id/rl_login"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/colorPrimaryDark"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="18sp"
+                                    android:text="NEED HELP ?"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:textColor="@color/colorPrimary"
+                                    />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rl_registration"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/yellow"
+                                >
+
+                                <TextView
+                                    android:id="@+id/btn_rate"
+                                    android:textColor="#ffffff"
+                                    android:text="RATE NOW"
+                                    android:textSize="18dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+<!--
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/card_view2"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    android:weightSum="2"
+    android:layout_weight="1">
+    <Button
+        android:id="@+id/btn_help"
+        android:textColor="#ffffff"
+        android:background="@color/btnblack"
+        android:text="Rate now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_rate"
+        android:textColor="#ffffff"
+        android:background="@color/btnblack"
+        android:text="Rate now"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
+-->
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
