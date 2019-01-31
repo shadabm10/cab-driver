@@ -41,30 +41,36 @@ public abstract class MapTrackingFragment extends Fragment implements
 
     protected synchronized void buildGoogleApiClient() {
 
-        Log.d("jwd", "buildGoogleApiClient: ");
+        Log.d("Driver", "buildGoogleApiClient: ");
 
 
-        int status = getActivity().getPackageManager().checkPermission(Manifest.permission.ACCESS_FINE_LOCATION,
-                getActivity().getPackageName());
+        /*int status = getActivity().getPackageManager().checkPermission(Manifest.permission.ACCESS_FINE_LOCATION,
+                getActivity().getPackageName());*/
 
-        if (status == PackageManager.PERMISSION_GRANTED) {
-            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-            mGoogleApiClient.connect();
-        }
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+
+        /*if (status == PackageManager.PERMISSION_GRANTED) {
+
+        }*/
+
+
     }
 
 
     protected void setupMap(GoogleMap googleMap){
-        Log.d("jwd", "setupMap: ");
+        Log.d("Driver", "setupMap: ");
         mGoogleMap = googleMap;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
+
+                Log.d("Driver","PERMISSION_GRANTED - ");
 
                 buildGoogleApiClient();
                 mGoogleMap.setMyLocationEnabled(true);
@@ -81,19 +87,15 @@ public abstract class MapTrackingFragment extends Fragment implements
         }
     }
 
-
-
     protected void requestLocation(){
-        Log.d("jwd", "requestLocation: ");
+        Log.d("Driver", "requestLocation: ");
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(3000);
         mLocationRequest.setFastestInterval(1000);
-        //mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            //LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
+           // LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
     }
@@ -162,6 +164,25 @@ public abstract class MapTrackingFragment extends Fragment implements
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+
+    @Override
+    public void onStart() {
+
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.connect();
+
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.disconnect();
+
+        super.onStop();
     }
 
 }

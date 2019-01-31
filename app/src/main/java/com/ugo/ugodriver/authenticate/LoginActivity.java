@@ -10,19 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.ugo.ugodriver.Base.BaseActivity;
-import com.ugo.ugodriver.Base.ValidationClass;
-import com.ugo.ugodriver.SplashScreen;
-import com.ugo.ugodriver.forgotPassword.ForgotPassActivity;
-import com.ugo.ugodriver.MainActivity;
-import com.ugo.ugodriver.R;
-import com.ugo.ugodriver.Rest.ApiClient;
+
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.security.ProviderInstaller;
 import com.rampo.updatechecker.UpdateChecker;
 import com.rampo.updatechecker.notice.Notice;
+import com.ugo.ugodriver.Base.BaseActivity;
+import com.ugo.ugodriver.Base.ValidationClass;
+import com.ugo.ugodriver.LocationPermission;
+import com.ugo.ugodriver.R;
+import com.ugo.ugodriver.Rest.ApiClient;
+import com.ugo.ugodriver.SplashScreen;
+import com.ugo.ugodriver.forgotPassword.ForgotPassActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,7 +101,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-
     private void updateAndroidSecurityProvider(Activity callingActivity) {
         try {
             ProviderInstaller.installIfNeeded(this);
@@ -130,8 +130,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             setSharedPref(LoginActivity.this, DRIVER_EMAIL, response.body().getDriver_info().getEmail());
                             setSharedPref(LoginActivity.this, DRIVER_PHONE, response.body().getDriver_info().getPhone());
                             setSharedPref(LoginActivity.this, DRIVER_IMAGE, response.body().getDriver_info().getImage());
-                            setSharedPref(LoginActivity.this, DRIVER_RATING, response.body().getDriver_info().getDriver_rating());
-                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                            setSharedPref(LoginActivity.this, DRIVER_fcm_reg_token, response.body().getDriver_info().getFcm_reg_token());
+                            setSharedPref(LoginActivity.this, DRIVER_device_type, response.body().getDriver_info().getDevice_type());
+                            setSharedPref(LoginActivity.this, DRIVER_deviceid, response.body().getDriver_info().getDeviceid());
+                            setSharedPrefFloat(LoginActivity.this, DRIVER_RATING, Float.parseFloat(response.body().getDriver_info().getDriver_rating()));
+                            Intent i = new Intent(LoginActivity.this, LocationPermission.class);
                             startActivity(i);
                             SplashScreen.fa.finish();
                             finish();

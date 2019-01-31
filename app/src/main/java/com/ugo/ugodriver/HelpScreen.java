@@ -63,7 +63,7 @@ public class HelpScreen extends AppCompatActivity {
     BookingModel booking ;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
 
-    String Appconfig="http://apps.mars-west.sws.sketchwebsolutions.net/P-1163-UGO/api/user_help";
+    String Appconfig="http://u-go.in/api/user_help";
     ImageView image_delete,back;
 
     String TAG="help";

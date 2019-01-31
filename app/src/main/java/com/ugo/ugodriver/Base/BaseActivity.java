@@ -22,13 +22,16 @@ public class BaseActivity extends AppCompatActivity {
     public static final String IS_LOGIN                  = "IS_LOGIN";
     public static final String AVAILABILITY              = "AVAILABILITY";
     public static final String CONTINUE_TIME             = "continue_time";
+    public static final String DRIVER_device_type             = "device_type";
+    public static final String DRIVER_fcm_reg_token             = "fcm_reg_token";
+    public static final String DRIVER_deviceid             = "deviceid";
     public static final String DRIVER_RATING             = "driver_rating";
 
     ProgressDialog progressDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
     }
 
     public  void showProgressdialog(String message,Boolean cancelelable){
@@ -63,7 +66,15 @@ public class BaseActivity extends AppCompatActivity {
         return prefs.getInt(key, 0);
     }
 
+    public float getSharedPrefFloat(Context context, String key){
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_LOCATION, Context.MODE_PRIVATE);
+        return prefs.getFloat(key, 0);
+    }
 
+    public void setSharedPrefFloat(Context context, String key, float value){
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_LOCATION, Context.MODE_PRIVATE);
+        prefs.edit().putFloat(key,value).apply();
+    }
 
     public void setSharedPrefInt(Context context, String key, int value){
         SharedPreferences prefs = context.getSharedPreferences(PREFS_LOCATION, Context.MODE_PRIVATE);

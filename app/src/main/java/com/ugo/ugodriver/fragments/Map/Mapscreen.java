@@ -42,6 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ugo.ugodriver.Base.BaseActivity;
+import com.ugo.ugodriver.Global;
 import com.ugo.ugodriver.cancel.CancelApi;
 import com.ugo.ugodriver.cancel.CancelModel;
 import com.ugo.ugodriver.cancel.CancellationReason;
@@ -103,7 +104,7 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
     //Service run
     //update current latlng every 4 sec
     //switch view accordingly to the above api response
-
+   Global global;
     BaseActivity ba;
     BookingModel bookingModel;
     Handler h = new Handler();
@@ -139,6 +140,7 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        global=(Global)getActivity().getApplicationContext();
         Log.d("GAIN_D", "onCreate: ");
         if (mMapView == null) {
             mMapView = SupportMapFragment.newInstance();
@@ -150,6 +152,7 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
         UpdateChecker checker = new UpdateChecker(getActivity());
         checker.setNotice(Notice.NOTIFICATION);
         checker.start();
+
     }
 
     @Override
@@ -209,8 +212,6 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
 
         requestLocation();
 
-
-
     }
 
     @Override
@@ -221,6 +222,7 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+        requestLocation();
     }
 
     @Override
@@ -237,12 +239,16 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
         }
 
 
-        if (!show_current_loc) {
+        CameraPosition camPosition = new CameraPosition.Builder()
+                .target(new LatLng(lat, lng)).zoom(17f).build();
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camPosition));
+
+       /* if (!show_current_loc) {
             CameraPosition camPosition = new CameraPosition.Builder()
                     .target(new LatLng(lat, lng)).zoom(17f).build();
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(camPosition));
             show_current_loc = true;
-        }
+        }*/
     }
 
 
@@ -286,7 +292,11 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
         if(requestCode == MY_PERMISSIONS_REQUEST_LOCATION){
             //If permission is granted
             if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
                 buildGoogleApiClient();
+
+                setupMap(googleMap);
+
                 //Displaying a toast
                 //Toast.makeText(getActivity(),"Permission granted now you can read the storage",Toast.LENGTH_LONG).show();
             }else{
@@ -315,11 +325,11 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
                 click_accept_reject = false;
                 break;
             case R.id.btn_client_located:
-                startActivityForResult(new Intent(getActivity(), EnterOtp.class),ENTER_OTP);
+                startActivityForResult(new Intent(getActivity(), EnterOtp.class), ENTER_OTP);
                 break;
             case R.id.btn_cancel_trip:
                 stopServiceClass();
-                startActivityForResult(new Intent(getActivity(), CancellationReason.class),CANCEL_REQUEST);
+                startActivityForResult(new Intent(getActivity(), CancellationReason.class), CANCEL_REQUEST);
                 break;
             case R.id.btn_drop_off:
                 endTrip(bookingModel.getBooking_id());
@@ -384,10 +394,12 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
             public void onClick(View view) {
                 if(switch_on_off.isChecked()){
                     switch_on_off.setText("Online");
+                    global.isOnline=true;
                     ba.setSharedPref(getActivity(), ba.AVAILABILITY, "Online");
                     Log.d("GC", "load "+ba.getSharedPref(getActivity(), ba.AVAILABILITY));
                 }else{
                     switch_on_off.setText("Offline");
+                    global.isOnline=false;
                     ba.setSharedPref(getActivity(), ba.AVAILABILITY, "Offline");
                     Log.d("GC", "load "+ba.getSharedPref(getActivity(), ba.AVAILABILITY));
                 }
@@ -472,6 +484,7 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
     public void onPause() {
 
         h.removeCallbacks(runnable);
+
         super.onPause();
 
     }
@@ -490,6 +503,17 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
                 h.postDelayed(runnable, delay);
             }
         }, delay);
+
+        if(global.isOnline){
+            switch_on_off.setChecked(true);
+            switch_on_off.setText("Online");
+        }
+        else {
+            switch_on_off.setChecked(false);
+            switch_on_off.setText("Offline");
+        }
+
+
         super.onResume();
 
     }
@@ -533,24 +557,36 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode== Activity.RESULT_OK) {
+
+        Log.d("SSSSS" , "requestCode "+requestCode);
+        Log.d("SSSSS" , "resultCode  "+resultCode);
+
+        if (resultCode == Activity.RESULT_OK) {
+
             Log.d("SSSSS" , "request code "+requestCode);
+
             switch (requestCode) {
+
                 case CANCEL_REQUEST:
                     cancelBooking(data.getStringExtra("reason"), bookingModel.getBooking_id());
                     break;
+
                 case ENTER_OTP:
                     startTrip(data.getStringExtra("otp"), tv_waiting_time.getText().toString() , bookingModel.getBooking_id());
                     break;
+
                 case RATE:
                     Log.d("SSSSS" , "Dropped off");
                     Log.d("SSSSS" , ""+data.getStringExtra("drop"));
                     rl_accepted_job.setVisibility(View.GONE);
                     hideUnhide("Drop");
                     break;
+
             }
         }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -802,6 +838,12 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
                                     bookingModel = response.body().getBooking_info();
                                     hideUnhide("Located" );
                                 }else{
+
+                                    hideUnhide("Cancel");
+                                }
+
+
+                                if (response.body().getBooking_info() == null){
                                     hideUnhide("Cancel");
                                 }
 
@@ -813,6 +855,7 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
 
                     }catch (Exception e){
                         e.printStackTrace();
+                        hideUnhide("Cancel");
                     }
 
                 }
@@ -970,7 +1013,7 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
     }
 
     //dropOff
-    private void endTrip(String booking_id) {
+    private void endTrip(final String booking_id) {
         progressDialog.setMessage("Stopping Trip ...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -1000,11 +1043,14 @@ public class Mapscreen extends MapTrackingFragment implements View.OnClickListen
 
 
                         Intent intent1 = new Intent(getActivity(), RateActivity.class);
+                        intent1.putExtra("booking_id" , booking_id);
                         intent1.putExtra("lat" , lat+"");
                         intent1.putExtra("lng" , lng+"");
                         intent1.putExtra("data" , response.body().getFare_Details());
                         intent1.putExtra("payment_mode" , payment_mode);
-                        startActivityForResult(intent1, RATE);
+                        //getActivity().startActivityForResult(intent1, RATE);
+
+                       startActivityForResult(intent1, RATE);
 
                     }
 

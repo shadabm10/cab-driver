@@ -17,7 +17,8 @@ public class ApiClient {
 
    // public static final String BASE_URL = "http://lab-5.sketchdemos.com/PHP-WEB-SERVICES/P-1048-GainCabs/";
    // public static final String BASE_URL = "http://lab-3.sketchdemos.com/P1163_UGO/";
-    public static final String BASE_URL = "http://apps.mars-west.sws.sketchwebsolutions.net/P-1163-UGO/";
+   // public static final String BASE_URL = "http://apps.mars-west.sws.sketchwebsolutions.net/P-1163-UGO/";
+    public static final String BASE_URL = "http://u-go.in/";
 
     private static Retrofit retrofit = null;
 

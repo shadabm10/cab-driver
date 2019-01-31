@@ -1,5 +1,6 @@
 package com.ugo.ugodriver.otp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,7 +54,7 @@ public class EnterOtp extends AppCompatActivity implements View.OnClickListener 
                     stopServiceClass();
                     Intent intent = new Intent();
                     intent.putExtra("otp", otpview.getOTP());
-                    setResult(RESULT_OK, intent);
+                    setResult(Activity.RESULT_OK, intent);
                     finish();
                 }else{
                     Toast.makeText(EnterOtp.this , "Enter OTP" , Toast.LENGTH_SHORT).show();

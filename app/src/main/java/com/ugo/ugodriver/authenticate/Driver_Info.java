@@ -23,11 +23,26 @@ public class Driver_Info {
     @SerializedName("approval_status")
     private String approval_status;
 
+
+
+    @SerializedName("device_type")
+    private String device_type;
+
     @SerializedName("image")
     private String image;
 
     @SerializedName("driver_doc")
     private String driver_doc;
+
+
+
+    @SerializedName("fcm_reg_token")
+    private String fcm_reg_token;
+
+
+
+    @SerializedName("deviceid")
+    private String deviceid;
 
     public String getDriver_rating() {
         return driver_rating;
@@ -42,6 +57,26 @@ public class Driver_Info {
 
     public String getUid() {
         return uid;
+    }
+    public String getDevice_type() {
+        return device_type;
+    }
+
+    public void setDevice_type(String device_type) {
+        this.device_type = device_type;
+    }
+    public String getFcm_reg_token() {
+        return fcm_reg_token;
+    }
+    public String getDeviceid() {
+        return deviceid;
+    }
+
+    public void setDeviceid(String deviceid) {
+        this.deviceid = deviceid;
+    }
+    public void setFcm_reg_token(String fcm_reg_token) {
+        this.fcm_reg_token = fcm_reg_token;
     }
 
     public void setUid(String uid) {

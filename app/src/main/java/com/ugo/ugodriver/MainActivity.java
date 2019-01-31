@@ -1,6 +1,7 @@
 package com.ugo.ugodriver;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,14 +20,33 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import com.ugo.ugodriver.Base.BaseActivity;
-import com.ugo.ugodriver.fragments.HelpFragment.HelpFrag;
-import com.ugo.ugodriver.fragments.myEarning.MyEarning;
-import com.ugo.ugodriver.profile.ProfileActivity;
-import com.ugo.ugodriver.fragments.booking_history.HistoryScreen;
-import com.ugo.ugodriver.fragments.Map.Mapscreen;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.rampo.updatechecker.UpdateChecker;
 import com.squareup.picasso.Picasso;
+import com.ugo.ugodriver.Base.BaseActivity;
+import com.ugo.ugodriver.fragments.HelpFragment.HelpFrag;
+import com.ugo.ugodriver.fragments.Map.Mapscreen;
+import com.ugo.ugodriver.fragments.booking_history.HistoryScreen;
+import com.ugo.ugodriver.fragments.myEarning.MyEarning;
+import com.ugo.ugodriver.profile.ProfileActivity;
+
+import org.json.JSONObject;
+
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.conn.ssl.SSLSocketFactory;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity
@@ -182,10 +203,9 @@ public class MainActivity extends BaseActivity
 
                 public void onClick(DialogInterface dialog, int which) {
                     // Do do my action here
-                    removePreference(MainActivity.this);
-                    startActivity(new Intent(MainActivity.this , SplashScreen.class));
 
-                    finish();
+                    logoutApi();
+
                     dialog.dismiss();
                 }
 
@@ -238,7 +258,7 @@ public class MainActivity extends BaseActivity
 
     public void setData(){
         driver_name.setText(getSharedPref(this,DRIVER_NAME));
-        rating_driver.setRating(Float.parseFloat(getSharedPref(this,DRIVER_RATING)));
+        rating_driver.setRating(getSharedPrefFloat(this,DRIVER_RATING));
         if(!getSharedPref(this,DRIVER_IMAGE).isEmpty()){
             Picasso.with(this)
                     .load(getSharedPref(this,DRIVER_IMAGE))
@@ -257,4 +277,106 @@ public class MainActivity extends BaseActivity
         setData();
         super.onResume();
     }
+
+
+    public SSLContext getSslContext() {
+
+        TrustManager[] byPassTrustManagers = new TrustManager[] { new X509TrustManager() {
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {
+            }
+
+            public void checkServerTrusted(X509Certificate[] chain, String authType) {
+            }
+        } };
+
+        SSLContext sslContext=null;
+
+        try {
+            sslContext = SSLContext.getInstance("TLS");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        try {
+            sslContext.init(null, byPassTrustManagers, new SecureRandom());
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+        return sslContext;
+    }
+
+    ProgressDialog pDialog;
+    public void logoutApi(){
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Checking...");
+        pDialog.show();
+
+
+        String url = "http://u-go.in/api/driver_logout";
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        client.setSSLSocketFactory(
+                new SSLSocketFactory(getSslContext(),
+                        SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER));
+
+        params.put("id", getSharedPref(this, DRIVER_ID));
+
+        Log.d("TAG" , "driver_logout - " + url);
+        Log.d("TAG" , "driver_logout - " + params.toString());
+
+        int DEFAULT_TIMEOUT = 30 * 1000;
+        client.setMaxRetriesAndTimeout(5 , DEFAULT_TIMEOUT);
+        client.post(url, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("TAG", "driver_logout- " + response.toString());
+
+                if (response != null) {
+                    try {
+
+                        int status = response.optInt("status");
+                        String message = response.optString("message");
+
+                        if (status == 1){
+
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                            removePreference(MainActivity.this);
+                            startActivity(new Intent(MainActivity.this , SplashScreen.class));
+
+                            finish();
+
+                        }else {
+
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                        }
+
+                        pDialog.dismiss();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                pDialog.dismiss();
+            }
+
+        });
+
+
+    }
+
+
 }

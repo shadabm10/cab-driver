@@ -1,5 +1,6 @@
 package com.ugo.ugodriver.rating;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
     ImageView back;
     RatingBar ratingbar;
     EditText edt_comment;
-    TextView rider_name, tv_distance, tv_time, tv_fare, tv_dist, confirm_paytm_payment;
+    TextView rider_name, tv_distance, tv_time, tv_fare,tv_dist, confirm_paytm_payment,tv_sub_total_fare,tv_waiting_fare,tv_commission,tv_gst_fare;
     CircleImageView rider_image;
     BaseActivity ba;
     String lat, lng;
@@ -51,6 +52,7 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
     String payment_mode;
     CardView card_msg_paytm;
     String TAG="Rate";
+    String booking_id;
 
 
     DecimalFormat precision = new DecimalFormat("0.00");
@@ -67,6 +69,10 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
     public void setViews() {
 
         rate =  findViewById(R.id.rate);
+        tv_sub_total_fare =  findViewById(R.id.tv_sub_total_fare);
+        tv_waiting_fare =  findViewById(R.id.tv_waiting_fare);
+        tv_commission =  findViewById(R.id.tv_commission);
+        tv_gst_fare =  findViewById(R.id.tv_gst_fare);
         back =  findViewById(R.id.back);
         ratingbar = findViewById(R.id.ratingbar);
         edt_comment = findViewById(R.id.edt_comment);
@@ -89,6 +95,9 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
         //booking = (BookingModel)getIntent().getSerializableExtra("booking");
         lat = getIntent().getStringExtra("lat");
         lng = getIntent().getStringExtra("lng");
+        booking_id = getIntent().getStringExtra("booking_id");
+
+
         setListners();
 
 
@@ -105,7 +114,12 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
                     + fareDetailsModel.getTotal_time_taken());
             Log.d("SS", "fare - "
                     +fareDetailsModel.getTotal_fare());
-
+            Log.d("SS", "fare - "
+                    +fareDetailsModel.getCommission_fair());
+            Log.d("SS", "fare - "
+                    +fareDetailsModel.getGst_fair());
+            Log.d("SS", "fare - "
+                    +fareDetailsModel.getWaiting_fair());
             if (payment_mode != null){
 
                 if (payment_mode.matches("paytm")){
@@ -123,8 +137,20 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
             tv_time.setText(secondMinHour(Integer.parseInt(fareDetailsModel.getTotal_time_taken())));
 
             double totalFare = Double.parseDouble(fareDetailsModel.getTotal_fare());
-
-            tv_fare.setText("₹ "+precision.format(Math.round(totalFare)));
+            double sub_total_fare = Double.parseDouble(fareDetailsModel.getSub_total_fare());
+            double waiting_fair = Double.parseDouble(fareDetailsModel.getWaiting_fair());
+            double commission_fair = Double.parseDouble(fareDetailsModel.getCommission_fair());
+            double gst_fair = Double.parseDouble(fareDetailsModel.getGst_fair());
+            String stringdouble= Double.toString(totalFare);
+            String sub_total_fare1= Double.toString(sub_total_fare);
+            String waiting_fair1= Double.toString(waiting_fair);
+            String commission_fair1= Double.toString(commission_fair);
+            String gst_fair1= Double.toString(gst_fair);
+            tv_fare.setText("₹ "+stringdouble);
+           tv_sub_total_fare.setText("₹ "+sub_total_fare1);
+            tv_waiting_fare.setText("₹ "+waiting_fair1);
+            tv_commission.setText("₹ "+commission_fair1);
+            tv_gst_fare.setText("₹ "+gst_fair1);
 
         }
 
@@ -132,9 +158,18 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
 
     public void setListners() {
         rate.setOnClickListener(this);
-        back.setOnClickListener(this);
+       // back.setOnClickListener(this);
         confirm_paytm_payment.setOnClickListener(this);
-        updateLatlng();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+       // updateLatlng();
     }
 
     @Override
@@ -151,16 +186,17 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                 }else{
-                    Toast.makeText(RateActivity.this, "Rate customer to complete the trip" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RateActivity.this,
+                            "Rate customer to complete the trip" ,
+                            Toast.LENGTH_SHORT).show();
                 }
-
-            case R.id.back:
-                finish();
 
                 break;
 
             case R.id.confirm_paytm_payment:
+
                 paytmPaymentConfirmation();
+
                 break;
 
         }
@@ -236,8 +272,10 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
         RateApi apiService = ApiClient.getClient().create(RateApi.class);
             Log.d("TAG", "id: " + ba.getSharedPref(this, ba.DRIVER_ID) + "");
             Log.d("TAG", "lat: " + lat + " " + lng);
+            Log.d("TAG", "booking_id: " +booking_id);
+
             Call<RateModel> call = apiService.sendFeedback(ba.getSharedPref(this, ba.DRIVER_ID)
-                    , booking.getBooking_id()
+                    , booking_id
                     , rate
                     , comment
             );
@@ -245,18 +283,29 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
             call.enqueue(new Callback<RateModel>() {
                 @Override
                 public void onResponse(Call<RateModel> call, Response<RateModel> response) {
-                    Log.d("TAG", "Raw1: ");
-                    progressDialog.dismiss();
-                    if (response != null) {
-                        if (response.body().getStatus() == 1 ) {
-                            Intent intent = new Intent();
-                            intent.putExtra("drop", "dropped");
-                            Log.d(TAG, "drop: "+intent.putExtra("drop", "dropped"));
-                            setResult(RESULT_OK, intent);
-                            finish();
+                    try {
+                        Log.d("TAG", "Raw rating: "+response);
 
+                        if (response != null) {
+                            if (response.body().getStatus() == 1 ) {
+
+                                Intent intent = new Intent();
+                                intent.putExtra("drop", "dropped");
+                                Log.d(TAG, "rating success: "+response.body().getStatus());
+                                setResult(Activity.RESULT_OK, intent);
+
+
+                                progressDialog.dismiss();
+
+                                finish();
+
+                            }
                         }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
+
                 }
 
                 @Override
@@ -285,9 +334,9 @@ public class RateActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog.setCancelable(false);
         progressDialog.show();
         RateApi apiService = ApiClient.getClient().create(RateApi.class);
-        Log.d("TAG", "Booking id: " + booking.getBooking_id());
+        Log.d("TAG", "Booking id: " + booking_id);
 
-        Call<RateModel> call = apiService.paytm_payment_confirmation(booking.getBooking_id());
+        Call<RateModel> call = apiService.paytm_payment_confirmation(booking_id);
 
         call.enqueue(new Callback<RateModel>() {
             @Override
